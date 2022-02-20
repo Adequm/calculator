@@ -1,5 +1,11 @@
 <template>
-  <div class="container" :style="{ height: `${ innerHeight }px` }">
+  <div 
+    class="container" 
+    :style="{ 
+      height: `${ innerHeight }px`, 
+      maxWidth: innerWidth < 768 ? '100vw' : `${ maxWidth }px`
+    }"
+  >
     <Icon 
       v-if="!isPageLoad"
       type="loader"
@@ -8,13 +14,16 @@
     />
     <Calculator
       v-else
+      ref="calculator"
       :history="history"
-      :themeIcon="themeData.icon"
+      :themeIcon="themeMain.icon"
       :minisLang="minisLang"
+      :maxWidth="maxWidth"
       @switchTheme="switchTheme"
       @switchLang="switchLang"
       @addToHistory="addToHistory"
       @clearHistory="clearHistory"
+      @changeMaxWidth="changeContainerMaxWidth"
     />
   </div>
 </template>
@@ -23,7 +32,7 @@
 import Calculator from './components/Calculator.vue';
 import Icon from './components/Icon.vue';
 import minisMixin from './mixins/minis.mixin';
-import { mapGetters, mapMutations, mapState } from 'vuex';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -37,6 +46,8 @@ export default {
 
   data: () => ({
     innerHeight: null,
+    innerWidth: null,
+    maxWidth: 300,
   }),
 
   computed: {
@@ -45,13 +56,18 @@ export default {
 
   methods: {
     ...mapMutations(['addToHistory', 'clearHistory']),
+    changeContainerMaxWidth(val) {
+      this.maxWidth = Math.min(600, Math.max(val, 300));
+    }
   },
 
 
   beforeMount() {
     this.innerHeight = innerHeight;
+    this.innerWidth = innerWidth;
     window.addEventListener('resize', event => {
       this.innerHeight = innerHeight;
+      this.innerWidth = innerWidth;
     })
   },
 }
@@ -99,7 +115,6 @@ body {
   body {
     .container {
       max-height: 560px;
-      max-width: 300px;
       margin: auto;
     }
   }

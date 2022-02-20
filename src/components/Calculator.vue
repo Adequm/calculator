@@ -2,10 +2,12 @@
   <div class="wrapper">
     <div class="calculator" ref="calculator">
 
-      <div class="theme" :class="{ isClosedSettings }">
+      <div class="settings" :class="{ isClosedSettings }">
         <Icon type="settings" @click="isClosedSettings = !isClosedSettings"/>
-        <Icon :type="themeIcon" @click="$emit('switchTheme')"/>
+        <Icon :type="themeIcon" @click="$emit('switchTheme', 'main')"/>
+        <Icon type="heart" @click="$emit('switchTheme', 'special')"/>
         <Icon type="globe" @click="$emit('switchLang')"/>
+        <!-- <Icon type="help-circle"/> -->
       </div>
 
       <div class="calculator__display">
@@ -28,6 +30,7 @@
           v-text="extendedValue || 0"
         />
       </div>
+
       <div class="calculator__buttons">
         <div class="calculator__wrap-row">
           <div class="calculator__button" @click="clear">AC</div>
@@ -55,6 +58,8 @@
         <div class="calculator__button" @click="plusMinus">±</div>
         <div class="calculator__button calculator__button-equal" @click="equal"/>
       </div>
+
+      <div class="resize_button" @mousedown="startResize"/>
     </div>
     <a href="https://adequm.github.io/minis" target="_blank" class="minis">Minis</a>
   </div>
@@ -74,6 +79,7 @@ export default {
     history: Array,
     themeIcon: String,
     minisLang: String,
+    maxWidth: Number,
   },
 
   data: () => ({
@@ -81,6 +87,8 @@ export default {
     fontSize: 1,
     limit: 30,
     isClosedSettings: true,
+    isResize: false,
+    startX: null,
     signs: {
       divide: '/',
       x: '*',
@@ -95,6 +103,7 @@ export default {
       if(value.length <= this.limit) return;
       this.value = this.value.slice(0, this.limit);
     },
+    maxWidth: 'changeFontSize',
   },
 
   computed: {
@@ -123,6 +132,27 @@ export default {
   },
 
   methods: {
+    setMaxWidth({ pageX }) {
+      requestAnimationFrame(() => {
+        const maxWidth = pageX - this.startResizeX + this.startResizeWidth;
+        this.$emit('changeMaxWidth', maxWidth);
+      })
+    },
+
+    startResize(event) {
+      this.startResizeX = event.pageX;
+      this.startResizeWidth = this.maxWidth;
+      document.addEventListener('mousemove', this.setMaxWidth);
+      document.addEventListener('mouseup', this.stopResize);
+    },
+
+    stopResize() {
+      this.startResizeX = null;
+      this.startResizeWidth = null;
+      document.removeEventListener('mousemove', this.setMaxWidth);
+      document.removeEventListener('mouseup', this.stopResize);
+    },
+
     checkFontSize() {
       const calculator = this.$refs.calculator;
       const ref = this.$refs.calculator__current;
@@ -135,7 +165,7 @@ export default {
           if(this.fontSize <= 0.1) return;
           this.fontSize = +(this.fontSize - 0.1).toFixed(1);
           this.changeFontSize();
-        } else if(width > 100) {
+        } else if(width > 50) {
           if(this.fontSize >= 1) return;
           this.fontSize = +(this.fontSize + 0.1).toFixed(1);
           this.changeFontSize();
@@ -318,7 +348,7 @@ export default {
     box-shadow: 0 3px 0 2px var(--main-bg-color);
     position: relative;
 
-    .theme {
+    .settings {
       display: grid;
       align-items: center;
       justify-items: center;
@@ -326,7 +356,7 @@ export default {
       width: calc((100vw - 100px)/4);
       grid-auto-rows: 50px;
       max-width: 50px; 
-      height: 35%;
+      min-height: 35%;
       left: 0;
       z-index: 3;
       &.isClosedSettings {
@@ -401,6 +431,7 @@ export default {
       grid-template-columns: repeat(4, 1fr);
       gap: 20px;
       box-sizing: border-box;
+      z-index: 5;
 
       .calculator__wrap-row {
         grid-column: 1/4;
@@ -442,6 +473,10 @@ export default {
         }
       }
     }
+
+    .resize_button {
+      display: none;
+    }
   }
 }
 
@@ -455,7 +490,7 @@ export default {
     .calculator {
       border-radius: 10px;
 
-      .theme {
+      .settings {
         align-content: center;
         left: calc(100% + 20px);
         color: var(--special-color);
@@ -496,6 +531,20 @@ export default {
 
       &__buttons .calculator__button-equal::after {
         padding-bottom: calc((560px * 0.65 - 120px)/5);
+      }
+
+      .resize_button {
+        position: absolute;
+        display: block;
+        width: 10px;
+        height: 10px;
+        background: var(--special-color);
+        bottom: 0;
+        right: 0;
+        z-index: 6;
+        clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        border-radius: 0 0 10px 0;
+        cursor: w-resize;
       }
     }
   }

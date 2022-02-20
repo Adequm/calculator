@@ -16,19 +16,32 @@ export default {
         document.title = this.translate('title');
       }
     },
-    themeData: {
+    themeMain: {
       deep: true,
-      handler(themeData) {
-        if(!themeData) return this.switchTheme();
-        Object.entries(themeData.properties).forEach(([key, color]) => {
+      handler(themeMain) {
+        if(!themeMain) return this.switchTheme('main');
+        Object.entries(themeMain.colors).forEach(([key, color]) => {
           document.body.style.setProperty(`--${ key }`, color);
         });
       },
     },
+    themeSpecial: {
+      deep: true,
+      handler(themeSpecial) {
+        if(!themeSpecial) return this.switchTheme('special');
+        document.body.style.setProperty(`--special-color`, themeSpecial.normal);
+      }
+    },
   },
 
   computed: {
-    ...mapGetters(['translate', 'translateList', 'themeData']),
+    ...mapGetters([
+        'translate', 
+        'translateList', 
+        'themeMain',
+        'themeSpecialName',
+        'themeSpecial'
+    ]),
     ...mapState({ 
       minisTheme: state => state.minis.minisTheme,
       minisLang: state => state.minis.minisLang,
