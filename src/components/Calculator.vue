@@ -165,7 +165,7 @@ export default {
           if(this.fontSize <= 0.1) return;
           this.fontSize = +(this.fontSize - 0.1).toFixed(1);
           this.changeFontSize();
-        } else if(width > 50) {
+        } else if(width > 100) {
           if(this.fontSize >= 1) return;
           this.fontSize = +(this.fontSize + 0.1).toFixed(1);
           this.changeFontSize();
