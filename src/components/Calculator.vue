@@ -322,20 +322,8 @@ export default {
 .wrapper {
   width: 100%;
   height: 100%;
-  .minis {
+  .minis { 
     display: none;
-    justify-content: end;
-    padding-right: 25px;
-    margin-top: 5px;
-    font-weight: bold;
-    color: #1A1D24;
-    opacity: .5;
-    cursor: pointer;
-    transition: opacity .2s;
-    text-decoration: none;
-    &:hover {
-      opacity: 1;
-    }
   }
 
   .calculator {
@@ -486,6 +474,17 @@ export default {
   .wrapper {
     .minis {
       display: flex;
+      justify-content: center;
+      margin-top: 5px;
+      font-weight: bold;
+      color: #1A1D24;
+      opacity: .5;
+      cursor: pointer;
+      transition: opacity .2s;
+      text-decoration: none;
+      width: calc((100% - 100px)/4);
+      float: right;
+      margin-right: 20px;
     }
     .calculator {
       border-radius: 10px;
