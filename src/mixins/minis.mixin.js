@@ -54,16 +54,31 @@ export default {
       switchLang: (commit, args) => commit('switchLang', args),
       initMinis: (commit, args) => commit('initMinis', args),
     }),
+
+    getMinisOptions() {
+      const linkToMinis = 'https://adequm.github.io/minis';
+      return new Promise(async resolve => {
+        try {
+          const translate = await fetch(`${ linkToMinis }/translate.json`).then(d => d.json());
+          const minisList = await fetch(`${ linkToMinis }/minisList.json`).then(d => d.json());
+          const themesList = await fetch(`${ linkToMinis }/themesList.json`).then(d => d.json());
+          Object.entries(themesList.default || []).forEach(([key, color]) => {
+            document.body.style.setProperty(`--${ key }`, color);
+          });
+          resolve({ translate, minisList, themesList });
+        } catch(err) {
+          setTimeout(async () => {
+            const minisOptions = await this.getMinisOptions();
+            resolve(minisOptions);
+          }, 2000);
+        }
+      });
+    },
   },
 
-  async beforeCreate() {
-    try {
-      const linkToMinis = 'https://adequm.github.io/minis';
-      const translate = await fetch(`${ linkToMinis }/translate.json`).then(d => d.json());
-      const minisList = await fetch(`${ linkToMinis }/minisList.json`).then(d => d.json());
-      const themesList = await fetch(`${ linkToMinis }/themesList.json`).then(d => d.json());
-      this.initMinis({ translate, minisList, themesList });
-    } catch(err) {}
+  async created() {
+    const minisOptions = await this.getMinisOptions();
+    this.initMinis(minisOptions);
     this.isPageLoad = true;
   },
 };
