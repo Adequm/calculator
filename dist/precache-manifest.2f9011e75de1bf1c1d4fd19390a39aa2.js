@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e905a232c60b1eddc8b9",
-    "url": "/calculator/css/app.c7887e26.css"
+    "revision": "4eb3f97ed82aecf57f36",
+    "url": "/calculator/css/app.e0f843c1.css"
   },
   {
     "revision": "8bf209bf8ac81043e662f44c3cd28171",
@@ -12,16 +12,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/calculator/img/confetti.14a9dfc6.svg"
   },
   {
-    "revision": "7cbbdd7db87122f270cb6745b3c0d64e",
+    "revision": "0caa760b2f951cd2481792f155782284",
     "url": "/calculator/index.html"
   },
   {
-    "revision": "e905a232c60b1eddc8b9",
-    "url": "/calculator/js/app.df6368dc.js"
+    "revision": "4eb3f97ed82aecf57f36",
+    "url": "/calculator/js/app.f60277c9.js"
   },
   {
-    "revision": "cf14d5a39de41fd8e39e",
-    "url": "/calculator/js/chunk-vendors.688141c1.js"
+    "revision": "6151c2a0a8d0f5f25e72",
+    "url": "/calculator/js/chunk-vendors.285be115.js"
   },
   {
     "revision": "d760802630e614fc481195e647cad03c",

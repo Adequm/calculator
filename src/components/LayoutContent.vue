@@ -1,16 +1,17 @@
 <template>
-  <div class="wrapper">
-    <div class="calculator" ref="calculator">
-
-      <div class="settings" :class="{ isClosedSettings }">
-        <Icon type="settings" @click="isClosedSettings = !isClosedSettings"/>
-        <Icon :type="themeIcon" @click="$emit('switchTheme', 'main')"/>
-        <Icon type="heart" @click="$emit('switchTheme', 'special')"/>
-        <Icon type="globe" @click="$emit('switchLang')"/>
-        <!-- <Icon type="help-circle"/> -->
-      </div>
-
+  <div 
+    class="minis__content"
+    :style="{ minHeight: `${ appHeight }px` }"
+    ref="calculator"
+  >
       <div class="calculator__display">
+        <div 
+          v-if="!isDesktop"
+          class="settings__button" 
+          @click="$emit('openModal', 'settings')"
+        >
+          <Icon type="settings"/>
+        </div>
         <div class="calculator__history" ref="calculator__history">
           <div class="calculator__history_container">
             <span
@@ -59,27 +60,25 @@
         <div class="calculator__button calculator__button-equal" @click="equal"/>
       </div>
 
-      <div class="resize_button" @mousedown.prevent="startResize"/>
-    </div>
-    <a href="https://adequm.github.io/minis" target="_blank" class="minis">Minis</a>
   </div>
 </template>
 
 <script>
-import Icon from './Icon';
+import Icon from './app/Icon';
 
 export default {
-  name: 'Calculator',
+  name: 'LayoutContent',
 
   components: {
     Icon,
   },
 
   props: {
+    appWidth: Number,
+    appHeight: Number,
+    isDesktop: Boolean,
+    translate: Function,
     history: Array,
-    themeIcon: String,
-    minisLang: String,
-    maxWidth: Number,
   },
 
   data: () => ({
@@ -103,7 +102,7 @@ export default {
       if(value.length <= this.limit) return;
       this.value = this.value.slice(0, this.limit);
     },
-    maxWidth: 'changeFontSize',
+    appWidth: 'changeFontSize',
   },
 
   computed: {
@@ -132,29 +131,6 @@ export default {
   },
 
   methods: {
-    setMaxWidth({ pageX }) {
-      requestAnimationFrame(() => {
-        const maxWidth = pageX - this.startResizeX + this.startResizeWidth;
-        this.$emit('changeMaxWidth', maxWidth);
-      })
-    },
-
-    startResize(event) {
-      this.startResizeX = event.pageX;
-      this.startResizeWidth = this.maxWidth;
-      document.addEventListener('mousemove', this.setMaxWidth);
-      document.addEventListener('mouseup', this.stopResize);
-      window.addEventListener('mouseleave', this.stopResize);
-    },
-
-    stopResize() {
-      this.startResizeX = null;
-      this.startResizeWidth = null;
-      document.removeEventListener('mousemove', this.setMaxWidth);
-      document.removeEventListener('mouseup', this.stopResize);
-      window.removeEventListener('mouseleave', this.stopResize);
-    },
-
     checkFontSize() {
       const calculator = this.$refs.calculator;
       const ref = this.$refs.calculator__current;
@@ -182,7 +158,7 @@ export default {
     },
 
     addSign(sign) {
-      if(this.value == 'Ошибка') this.value = '';
+      if(this.value == this.translate('error')) this.value = '';
 
       const isNumberKey = !isNaN(+sign);
       const isEmpty = !this.value;
@@ -229,13 +205,13 @@ export default {
     },
 
     addDot() {
-      if(this.value == 'Ошибка') this.value = '';
+      if(this.value == this.translate('error')) this.value = '';
       const lastValue = this.value.split(/(\/|\*|\+|\-)/g).slice(-1)[0];
       if(!lastValue) this.value += '0';
       if(!lastValue.includes('.')) this.value += '.';
     },
     plusMinus() {
-      if(this.value == 'Ошибка') this.value = '';
+      if(this.value == this.translate('error')) this.value = '';
       if(!this.value) this.value += '0';
       this.value = this.value.startsWith('-')
         ? this.value.slice(1)
@@ -243,7 +219,7 @@ export default {
     },
     percent(pow = 2) {
       const length = this.value.toString().replace(/^\d*(\.|)/, '').length;
-      if(!this.value || this.value == 'Ошибка') return;
+      if(!this.value || this.value == this.translate('error')) return;
       if(this.limit <= length + pow) return;
       if(!/\d$/.exec(this.value)) return;
       this.value = (parseFloat(this.value) / (10 ** pow)).toFixed(length + pow);
@@ -254,7 +230,7 @@ export default {
       this.$emit('clearHistory');
     },
     historyBack(isFull) {
-      if(this.value == 'Ошибка') {
+      if(this.value == this.translate('error')) {
         this.value = '';
         return;
       }
@@ -265,7 +241,7 @@ export default {
       }
     },
     equal() {
-      if(this.value == 'Ошибка') return;
+      if(this.value == this.translate('error')) return;
       this.value = this.value.replace(/(\-|\+|\*|\/|\.|\()*$/, '');
       if(!this.value) return;
       this.value += this.endsBrackets;
@@ -274,7 +250,7 @@ export default {
 
       if(equation.replace(/(\(|\))/g, '') == answer) return;
       if(answer.toString().endsWith('Infinity') || isNaN(answer)) {
-        this.value = 'Ошибка';
+        this.value = this.translate('error');
         return;
       }
 
@@ -321,12 +297,16 @@ export default {
 </script>
 
 <style lang="scss">
-.wrapper {
-  width: 100%;
-  height: 100%;
-  .minis { 
-    display: none;
-  }
+.minis__content {
+  display: grid;
+  grid-template-rows: 35% 65%;
+  height: inherit;
+  background-color: var(--main-bg-color);
+  color: var(--text-color);
+  font-size: 18px;
+  position: relative;
+  top: 0;
+  z-index: 1;
 
   .calculator {
     display: grid;
@@ -338,28 +318,6 @@ export default {
     box-shadow: 0 3px 0 2px var(--main-bg-color);
     position: relative;
 
-    .settings {
-      display: grid;
-      align-items: center;
-      justify-items: center;
-      position: absolute;
-      width: calc((100vw - 100px)/4);
-      grid-auto-rows: 50px;
-      max-width: 50px; 
-      min-height: 35%;
-      left: 0;
-      z-index: 3;
-      &.isClosedSettings {
-        & > svg:nth-child(1) { opacity: 1; }
-        & > svg:nth-child(n+2) { display: none; }
-      }
-      & > svg {
-        cursor: pointer;
-        width: 100%;
-        &:nth-child(1) { opacity: .5; }
-        &:nth-child(n+2) { opacity: 1; }
-      }
-    }
 
     &__display {
       padding: 20px;
@@ -367,11 +325,21 @@ export default {
       display: grid;
       grid-template-rows: 1fr 30px;
       gap: .5rem;
-      justify-content: end;
+      justify-content: flex-end;
       font-size: 30px;
       position: relative;
       box-sizing: border-box;
       z-index: 2;
+      .settings__button {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: .5;
+      }
+
       .calculator__history {
         overflow: auto;
         &_container {
@@ -379,8 +347,8 @@ export default {
           font-size: .5em;
           display: flex;
           flex-direction: column;
-          justify-content: end;
-          align-items: end;
+          justify-content: flex-end;
+          align-items: flex-end;
           padding-right: 5px;
           min-height: 100%;
           span {
@@ -395,8 +363,8 @@ export default {
       }
       .calculator__current {
         display: flex;
-        justify-content: end;
-        align-items: end;
+        justify-content: flex-end;
+        align-items: flex-end;
         line-height: 1em;
         margin-left: auto;
         padding-right: 5px;
@@ -463,89 +431,21 @@ export default {
         }
       }
     }
-
-    .resize_button {
-      display: none;
-    }
   }
 }
 
-
-
 @media screen and (min-width: 768px) {
-  .wrapper {
-    .minis {
-      display: flex;
-      justify-content: center;
-      margin-top: 5px;
-      font-weight: bold;
-      color: #1A1D24;
-      opacity: .5;
-      cursor: pointer;
-      transition: opacity .2s;
-      text-decoration: none;
-      width: calc((100% - 100px)/4);
-      float: right;
-      margin-right: 20px;
-    }
+  .minis__content {
+    border-radius: 10px;
+    clip-path: polygon(
+      0 5px, 5px 0, calc(100% - 5px) 0, 101% 5px, 
+      101% calc(100% - 5px), calc(100% - 5px) 101%, 5px 101%, 0 calc(100% - 5px)
+    );
     .calculator {
       border-radius: 10px;
 
-      .settings {
-        align-content: center;
-        left: calc(100% + 20px);
-        color: var(--special-color);
-        z-index: 1;
-        &::after, &::before {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: var(--main-bg-color);
-          border-radius: 10px;
-          z-index: -1;
-          transition: transform .2s;
-        }
-        &::before {
-          transform: translateX(calc(-100% - 18px));
-          z-index: 1;
-        }
-        & > svg {
-          transition: transform .2s;
-          opacity: 1;
-          &:nth-child(1) { 
-            opacity: 1;
-            position: absolute;
-            bottom: 100%;
-            right: calc(50% + 10px);
-          }
-        }
-        &.isClosedSettings {
-          &::after, & > svg:nth-child(n+2) {
-            display: block;
-            transform: translateX(calc(-100% - 20px))
-          }
-        }
-      }
-
       &__buttons .calculator__button-equal::after {
         padding-bottom: calc((560px * 0.65 - 120px)/5);
-      }
-
-      .resize_button {
-        position: absolute;
-        display: block;
-        width: 10px;
-        height: 10px;
-        background: var(--special-color);
-        bottom: 0;
-        right: 0;
-        z-index: 6;
-        clip-path: polygon(100% 0, 100% 100%, 0 100%);
-        border-radius: 0 0 10px 0;
-        cursor: w-resize;
       }
     }
   }

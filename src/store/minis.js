@@ -1,54 +1,56 @@
 import Vue from 'vue';
+import _ from 'lodash';
+
 const store = {};
 
 store.state = () => ({
   minisLang: 'ru',
   minisThemeMain: null,
   minisThemeSpecial: null,
-  themesList: {},
-  translate: {},
-  minisList: {},
+  translateJSON: {},
+  themesJSON: {},
+  minisJSON: {},
 });
 
 store.getters = {
-  translateList({ translate, minisLang }) {
-    return translate?.[minisLang]?.calculator || {};
+  translateOfMinis({ translateJSON, minisLang }) {
+    return translateJSON?.[minisLang]?.calculator || {};
   },
-  translate({}, { translateList }) {
-    return path => translateList?.[path] || 'Err';
+  translate({}, { translateOfMinis }) {
+    return path => _.get(translateOfMinis, path, translateOfMinis.error || '%err%');
   },
-  themeMain({ themesList, minisThemeMain }) {
-    const isExist = themesList?.main?.[minisThemeMain];
-    return isExist ? themesList.main[minisThemeMain] : themesList?.main?.dark;
+  themeMain({ themesJSON, minisThemeMain }) {
+    const isExist = themesJSON?.main?.[minisThemeMain];
+    return isExist ? themesJSON.main[minisThemeMain] : themesJSON?.main?.dark;
   },
-  themeSpecialName({ themesList, minisThemeSpecial }) {
-    const isExist = themesList?.special?.colors?.[minisThemeSpecial];
-    return isExist ? minisThemeSpecial : themesList?.special?.default;
+  themeSpecialName({ themesJSON, minisThemeSpecial }) {
+    const isExist = themesJSON?.special?.colors?.[minisThemeSpecial];
+    return isExist ? minisThemeSpecial : themesJSON?.special?.default;
   },
-  themeSpecial({ themesList }, { themeSpecialName }) {
-    return themesList?.special?.colors?.[themeSpecialName];
+  themeSpecial({ themesJSON }, { themeSpecialName }) {
+    return themesJSON?.special?.colors?.[themeSpecialName];
   },
 };
 
 store.mutations = {
   switchTheme(state, type = 'main') {
     const stateKey = type == 'main' ? 'minisThemeMain' : 'minisThemeSpecial';
-    const themes = type == 'main' ? state.themesList.main : state.themesList.special.colors;
-    const themesList = Object.keys(themes);
-    const themeIndex = themesList.indexOf(state[stateKey]);
-    const newThemeIndex = (themeIndex + 1) % themesList.length;
-    Vue.set(state, stateKey, themesList[newThemeIndex]);
+    const themes = type == 'main' ? state.themesJSON.main : state.themesJSON.special.colors;
+    const themesJSON = Object.keys(themes);
+    const themeIndex = themesJSON.indexOf(state[stateKey]);
+    const newThemeIndex = (themeIndex + 1) % themesJSON.length;
+    Vue.set(state, stateKey, themesJSON[newThemeIndex]);
   },
   switchLang(state) {
-    const langsList = Object.keys(state.translate);
+    const langsList = Object.keys(state.translateJSON);
     const langIndex = langsList.indexOf(state.minisLang);
     const newLangIndex = (langIndex + 1) % langsList.length;
     Vue.set(state, 'minisLang', langsList[newLangIndex]);
   },
-  initMinis(state, { translate, minisList, themesList }) {
-    Vue.set(state, 'minisList', minisList);
-    Vue.set(state, 'translate', translate);
-    Vue.set(state, 'themesList', themesList);
+  initMinis(state, { translateJSON, minisJSON, themesJSON }) {
+    Vue.set(state, 'minisJSON', minisJSON);
+    Vue.set(state, 'translateJSON', translateJSON);
+    Vue.set(state, 'themesJSON', themesJSON);
   },
 };
 
