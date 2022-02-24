@@ -34,7 +34,7 @@
 
       <div class="calculator__buttons">
         <div class="calculator__wrap-row">
-          <div class="calculator__button" @click="clear">AC</div>
+          <div class="calculator__button" @click="clear" v-text="value ? 'C' : 'AC'"/>
           <div class="calculator__button"  @click="historyBack()"><Icon type="delete"/></div>
           <div class="calculator__button" @click="percent()"><Icon type="percent"/></div>
         </div>
@@ -226,8 +226,12 @@ export default {
     },
 
     clear() {
-      this.value = '';
-      this.$emit('clearHistory');
+      if(this.value) {
+        this.value = '';
+        this.historyBack(true);
+      } else {
+        this.$emit('clearHistory');
+      }
     },
     historyBack(isFull) {
       if(this.value == this.translate('error')) {
