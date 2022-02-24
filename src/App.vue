@@ -213,7 +213,7 @@ body {
         transform: translateY(-100%);
         right: 0;
         top: 100%;
-        z-index: 6;
+        z-index: 101;
         clip-path: polygon(100% 0, 100% 100%, 0 100%);
         border-radius: 0 0 10px 0;
         cursor: w-resize;
