@@ -14,7 +14,8 @@ store.state = () => ({
 
 store.getters = {
   translateOfMinis({ translateJSON, minisLang }) {
-    return translateJSON?.[minisLang]?.calculator || {};
+    const minisName = location.pathname.split('/')[1];
+    return translateJSON?.[minisLang]?.[minisName] || {};
   },
   translate({}, { translateOfMinis }) {
     return path => _.get(translateOfMinis, path, translateOfMinis.error || '%err%');

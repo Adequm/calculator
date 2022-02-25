@@ -85,9 +85,6 @@ export default {
     value: '',
     fontSize: 1,
     limit: 30,
-    isClosedSettings: true,
-    isResize: false,
-    startX: null,
     signs: {
       divide: '/',
       x: '*',
@@ -284,7 +281,7 @@ export default {
           this.equal();
           break;
         case 'Escape':
-          this.isClosedSettings = !this.isClosedSettings;
+          this.$emit('switchSettings');
           break;
       }
     },

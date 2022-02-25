@@ -70,7 +70,7 @@ export default {
 
     themesJSONInit() {
       Object.entries(this.themesJSON.default || []).forEach(([key, color]) => {
-        document.body.style.setProperty(`--${ key }`, color);
+        document.body.style.setProperty(`--${ key }-color`, color);
       });
     },
 
@@ -84,9 +84,9 @@ export default {
       const linkToMinis = 'https://adequm.github.io/minis';
       return new Promise(async resolve => {
         try {
-          const translateJSON = await fetch(`${ linkToMinis }/translate.json`).then(d => d.json());
-          const minisJSON = await fetch(`${ linkToMinis }/minisList.json`).then(d => d.json());
-          const themesJSON = await fetch(`${ linkToMinis }/themesList.json`).then(d => d.json());
+          const translateJSON = await fetch(`${ linkToMinis }/translateJSON.json`).then(d => d.json());
+          const minisJSON = await fetch(`${ linkToMinis }/minisJSON.json`).then(d => d.json());
+          const themesJSON = await fetch(`${ linkToMinis }/themesJSON.json`).then(d => d.json());
           resolve({ translateJSON, minisJSON, themesJSON });
         } catch(err) {
           setTimeout(async () => {
