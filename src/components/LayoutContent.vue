@@ -332,6 +332,7 @@ export default {
       box-sizing: border-box;
       z-index: 2;
       .settings__button {
+        cursor: pointer;
         position: absolute;
         width: 50px;
         height: 50px;
