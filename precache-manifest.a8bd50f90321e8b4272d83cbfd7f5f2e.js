@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "747d3c85163495115b54",
+    "revision": "60abdfe8fe77bc772934",
     "url": "/calculator/css/app.2324735f.css"
   },
   {
@@ -12,12 +12,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/calculator/img/confetti.14a9dfc6.svg"
   },
   {
-    "revision": "727785f8b8c6ab9e66a311f8ab28f37c",
+    "revision": "795813eca326e730ac25bf7d8213bd95",
     "url": "/calculator/index.html"
   },
   {
-    "revision": "747d3c85163495115b54",
-    "url": "/calculator/js/app.a9f6872a.js"
+    "revision": "60abdfe8fe77bc772934",
+    "url": "/calculator/js/app.ce2af86c.js"
   },
   {
     "revision": "6151c2a0a8d0f5f25e72",
