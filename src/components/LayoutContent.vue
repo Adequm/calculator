@@ -28,7 +28,7 @@
           :class="{ equal: historyLast == value }"
           :style="{ opacity: value.length ? '1' : '.25', fontSize: `${ fontSize }em` }"
           :data-brackets="endsBrackets"
-          v-text="extendedValue || 0"
+          v-text="extendedValue == 'error' ? translate('error') : extendedValue || 0"
         />
       </div>
 
@@ -155,7 +155,7 @@ export default {
     },
 
     addSign(sign) {
-      if(this.value == this.translate('error')) this.value = '';
+      if(this.value == 'error') this.value = '';
 
       const isNumberKey = !isNaN(+sign);
       const isEmpty = !this.value;
@@ -202,13 +202,13 @@ export default {
     },
 
     addDot() {
-      if(this.value == this.translate('error')) this.value = '';
+      if(this.value == 'error') this.value = '';
       const lastValue = this.value.split(/(\/|\*|\+|\-)/g).slice(-1)[0];
       if(!lastValue) this.value += '0';
       if(!lastValue.includes('.')) this.value += '.';
     },
     plusMinus() {
-      if(this.value == this.translate('error')) this.value = '';
+      if(this.value == 'error') this.value = '';
       if(!this.value) this.value += '0';
       this.value = this.value.startsWith('-')
         ? this.value.slice(1)
@@ -216,7 +216,7 @@ export default {
     },
     percent(pow = 2) {
       const length = this.value.toString().replace(/^\d*(\.|)/, '').length;
-      if(!this.value || this.value == this.translate('error')) return;
+      if(!this.value || this.value == 'error') return;
       if(this.limit <= length + pow) return;
       if(!/\d$/.exec(this.value)) return;
       this.value = (parseFloat(this.value) / (10 ** pow)).toFixed(length + pow);
@@ -231,7 +231,7 @@ export default {
       }
     },
     historyBack(isFull) {
-      if(this.value == this.translate('error')) {
+      if(this.value == 'error') {
         this.value = '';
         return;
       }
@@ -242,7 +242,7 @@ export default {
       }
     },
     equal() {
-      if(this.value == this.translate('error')) return;
+      if(this.value == 'error') return;
       this.value = this.value.replace(/(\-|\+|\*|\/|\.|\()*$/, '');
       if(!this.value) return;
       this.value += this.endsBrackets;
@@ -251,7 +251,7 @@ export default {
 
       if(equation.replace(/(\(|\))/g, '') == answer) return;
       if(answer.toString().endsWith('Infinity') || isNaN(answer)) {
-        this.value = this.translate('error');
+        this.value = 'error';
         return;
       }
 
