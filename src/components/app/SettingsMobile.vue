@@ -3,6 +3,7 @@
     <Icon :type="themeIcon" @click.prevent="$emit('switchTheme', 'main')"/>
     <Icon type="heart" @click.prevent="$emit('switchTheme', 'special')"/>
     <Icon type="globe" @click.prevent="$emit('switchLang')"/>
+    <Icon v-if="isWidthMore768" type="minimize-2" @click.prevent="$emit('switchFullscreen')"/>
   </div>
 </template>
 
@@ -19,6 +20,7 @@ export default {
   props: {
     themeIcon: String,
     value: Boolean,
+    isWidthMore768: Boolean,
   },
 };
 </script>

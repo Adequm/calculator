@@ -3,8 +3,8 @@
     class="container" 
     :style="{ 
       height: `${ innerHeight }px`, 
-      maxWidth: innerWidth < 768 ? '100vw' : `${ containerWidth }px`,
-      maxHeight: innerWidth < 768 ? '100vh' : `${ containerHeight }px`,
+      maxWidth: isDesktop ? `${ containerWidth }px` : '100vw',
+      maxHeight: isDesktop ? `${ containerHeight }px` : '100vh',
     }"
   >
     <Icon v-if="!isPageLoad" type="loader" class="loader" rotate/>
@@ -16,6 +16,7 @@
         v-model="isClosedSettings"
         @switchTheme="switchTheme"
         @switchLang="switchLang"
+        @switchFullscreen="isFullscreen = !isFullscreen"
       />
 
       <LayoutContent
@@ -34,12 +35,19 @@
         <SettingsMobile 
           v-if="openedModalName == 'settings'"
           :themeIcon="themeMain.icon"
+          :isWidthMore768="isWidthMore768"
           @switchTheme="switchTheme"
           @switchLang="switchLang"
+          @switchFullscreen="isFullscreen = !isFullscreen"
         />
       </AppModal>
 
-      <div v-if="isDesktop" class="resize_button" @mousedown.prevent="startResize"/>
+      <div 
+        v-if="isDesktop" 
+        class="resize_button" 
+        @mousedown.prevent="startResize"
+        @dblclick.prevent="autoResize"
+      />
       <a v-if="isDesktop" href="https://adequm.github.io/minis" target="_blank" class="minis">Minis</a>
     </div>
 
@@ -150,8 +158,8 @@ body {
         justify-content: center;
         margin-top: 5px;
         font-weight: bold;
-        color: #1A1D24;
-        opacity: .5;
+        color: var(--dark-color);
+        opacity: .25;
         cursor: pointer;
         transition: opacity .2s;
         text-decoration: none;
@@ -160,6 +168,9 @@ body {
         position: absolute;
         top: 100%;
         right: 0;
+        &:hover {
+          opacity: .5;
+        }
       }
 
       .resize_button {

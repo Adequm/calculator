@@ -4,6 +4,7 @@
     <Icon :type="themeIcon" @click.prevent="$emit('switchTheme', 'main')"/>
     <Icon type="heart" @click.prevent="$emit('switchTheme', 'special')"/>
     <Icon type="globe" @click.prevent="$emit('switchLang')"/>
+    <Icon type="maximize-2" @click.prevent="$emit('switchFullscreen')"/>
   </div>
 </template>
 

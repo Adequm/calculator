@@ -28,7 +28,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40% 20%;
+  padding: 50px;
   box-sizing: border-box;
   &__background {
     position: absolute;
