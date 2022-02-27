@@ -1,3 +1,3 @@
 module.exports = {
-  publicPath: '/calculator/'
+  publicPath: '/minis-calculator/'
 }

@@ -8,6 +8,7 @@ import minisModule from './minis';
 const store = {};
 Vue.use(Vuex);
 
+
 store.state = () => ({
   history: [],
 });
@@ -24,13 +25,12 @@ store.mutations = {
 };
 
 
-
 const persistedMinis = [
   'minis.minisThemeMain', 'minis.minisThemeSpecial', 'minis.minisLang',
   'minis.themesJSON', 'minis.translateJSON', 'minis.minisJSON',
 ];
 const persistedLocal = ['history'];
-const projectKey = `minis-${ location.pathname.split('/')[1] }`;
+const projectKey = location.pathname.split('/')[1];
 store.modules = { minis: minisModule };
 store.plugins = [
   createMutationsSharer({ predicate: () => [...persistedMinis, ...persistedLocal] }),
