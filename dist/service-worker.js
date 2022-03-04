@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/minis-calculator/precache-manifest.72fbdcc48822d11f3d16d7ac8d72c92f.js"
+  "/minis-calculator/precache-manifest.61df4d5d4027a7a8d1f3a75b156d2eb1.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "calculator"});
