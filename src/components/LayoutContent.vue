@@ -36,15 +36,16 @@
         <div class="calculator__wrap-row">
           <div class="calculator__button" @click="clear" v-text="value ? 'C' : 'AC'"/>
           <div class="calculator__button"  @click="historyBack()"><Icon type="delete"/></div>
-          <div class="calculator__button" @click="percent()"><Icon type="percent"/></div>
+          <div class="calculator__button" @click="percent()">%</div>
         </div>
         <div class="calculator__wrap-column">
           <div 
-            v-for="(sign, signName) of signs"
-            :key="sign"
+            v-for="sign of signs"
+            :key="`sign_${ sign }`"
             class="calculator__button"
             @click="addSign(sign)"
-          ><Icon :type="signName"/></div>
+            v-text="sign"
+          />
         </div>
 
         <div 
@@ -85,12 +86,7 @@ export default {
     value: '',
     fontSize: 1,
     limit: 30,
-    signs: {
-      divide: '/',
-      x: '*',
-      minus: '-',
-      plus: '+'
-    }
+    signs: ['/', '*', '-', '+'],
   }),
 
   watch: {
