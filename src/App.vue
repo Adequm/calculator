@@ -58,6 +58,7 @@
 import minisMixin from './mixins/minis.mixin';
 import resizeMixin from './mixins/resize.mixin';
 import faviconMixin from './mixins/favicon.mixin';
+import translateMixin from './mixins/translate.mixin';
 import Icon from './components/app/Icon';
 import SettingsDesktop from './components/app/SettingsDesktop';
 import SettingsMobile from './components/app/SettingsMobile';
@@ -75,7 +76,7 @@ export default {
     Icon,
   },
 
-  mixins: [minisMixin, resizeMixin, faviconMixin],
+  mixins: [minisMixin, resizeMixin, faviconMixin, translateMixin],
 
   data: () => ({
     isClosedSettings: true,
