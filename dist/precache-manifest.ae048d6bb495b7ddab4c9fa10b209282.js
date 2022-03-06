@@ -12,7 +12,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/minis-calculator/img/confetti.14a9dfc6.svg"
   },
   {
-    "revision": "dbfc04b429e9a3496658315fb51d4ced",
+    "revision": "ba2138c92b42c059019215207f879321",
     "url": "/minis-calculator/index.html"
   },
   {
