@@ -4,12 +4,14 @@ import createPersistedState from 'vuex-persistedstate';
 import createMutationsSharer from 'vuex-shared-mutations';
 
 import minisModule from './minis';
+const projectKey = location.pathname.split('/')[1];
 
 const store = {};
 Vue.use(Vuex);
 
 
 store.state = () => ({
+  projectKey: projectKey.split('-').slice(-1)[0],
   history: [],
 });
 
@@ -30,7 +32,6 @@ const persistedMinis = [
   'minis.themesJSON', 'minis.translateJSON', 'minis.minisJSON',
 ];
 const persistedLocal = ['history'];
-const projectKey = location.pathname.split('/')[1];
 store.modules = { minis: minisModule };
 store.plugins = [
   createMutationsSharer({ predicate: () => [...persistedMinis, ...persistedLocal] }),
