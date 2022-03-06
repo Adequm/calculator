@@ -21,6 +21,9 @@
       :size="30"
       @click.prevent="$emit('switchFullscreen')"
     />
+    <a href="https://adequm.github.io/minis" target="_blank" class="minis">
+      <Icon type="home" :size="30"/>
+    </a>
   </div>
 </template>
 
@@ -54,6 +57,21 @@ export default {
   & > .icon {
     cursor: pointer;
     margin: 15px;
+    &:hover {
+      color: var(--text-color);
+    }
+  }
+  .minis {
+    background: var(--main-bg-color);
+    opacity: 1 !important;
+    padding: 15px 25px;
+    border-radius: 10px 10px 0 0;
+    bottom: 0;
+    top: auto;
+    width: auto;
+    right: auto;
+    margin: 0;
+    transform: translateX(-10px);   
     &:hover {
       color: var(--text-color);
     }
