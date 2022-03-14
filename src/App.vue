@@ -32,7 +32,10 @@
         @clearHistory="clearHistory"
       />
 
-      <AppModal v-model="openedModalName">
+      <AppModal 
+        v-model="openedModalName"
+        :isRoundedBorder="isWidthMore768 && !isFullscreen"
+      >
         <SettingsMobile 
           v-if="openedModalName == 'settings'"
           :themeIcon="themeMain.icon"
