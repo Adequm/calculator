@@ -49,7 +49,13 @@
         @mousedown.prevent="startResize"
         @dblclick.prevent="autoResize"
       />
-      <a v-if="isDesktop" href="https://adequm.github.io/minis" target="_blank" class="minis">Minis</a>
+      <a 
+        v-if="isDesktop" 
+        href="https://adequm.github.io/minis" 
+        target="_blank" 
+        class="minis"
+        v-text="'Minis'"
+      />
     </div>
 
   </div>
@@ -60,10 +66,12 @@ import minisMixin from './mixins/minis.mixin';
 import resizeMixin from './mixins/resize.mixin';
 import faviconMixin from './mixins/favicon.mixin';
 import translateMixin from './mixins/translate.mixin';
+
 import Icon from './components/app/Icon';
 import SettingsDesktop from './components/app/SettingsDesktop';
 import SettingsMobile from './components/app/SettingsMobile';
 import AppModal from './components/app/AppModal';
+
 import LayoutContent from './components/LayoutContent';
 
 import { mapState, mapMutations } from 'vuex';
@@ -173,16 +181,14 @@ body {
         justify-content: center;
         margin-top: 5px;
         font-weight: bold;
-        color: var(--dark-color);
+        color: var(--special-color);
         opacity: .25;
         cursor: pointer;
         transition: opacity .2s;
         text-decoration: none;
-        width: calc((100% - 100px)/4);
         margin-right: 20px;
         position: absolute;
-        top: 100%;
-        right: 0;
+        bottom: 0;
         &:hover {
           opacity: .5;
         }
