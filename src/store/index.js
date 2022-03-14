@@ -11,12 +11,14 @@ Vue.use(Vuex);
 
 
 store.state = () => ({
+  isFullscreen: false,
   projectKey: projectKey.split('-').slice(1).join('-'),
   history: [],
 });
 
 
 store.mutations = {
+  switchFullscreen: state => Vue.set(state, 'isFullscreen', !state.isFullscreen),
   addToHistory(state, data) {
     const newHistory = state.history.slice(-9).concat([data]);
     Vue.set(state, 'history', newHistory);
@@ -28,10 +30,17 @@ store.mutations = {
 
 
 const persistedMinis = [
-  'minis.minisThemeMain', 'minis.minisThemeSpecial', 'minis.minisLang',
-  'minis.themesJSON', 'minis.translateJSON', 'minis.minisJSON',
+  'minis.minisThemeMain', 
+  'minis.minisThemeSpecial', 
+  'minis.minisLang',
+  'minis.themesJSON', 
+  'minis.translateJSON', 
+  'minis.minisJSON',
 ];
-const persistedLocal = ['history'];
+const persistedLocal = [
+  'isFullscreen',
+  'history',
+];
 store.modules = { minis: minisModule };
 store.plugins = [
   createMutationsSharer({ predicate: () => [...persistedMinis, ...persistedLocal] }),

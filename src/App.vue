@@ -1,6 +1,7 @@
 <template>
   <div 
     class="container" 
+    :class="{ fullscreen: isFullscreen }"
     :style="{ 
       height: `${ innerHeight }px`, 
       maxWidth: isDesktop ? `${ containerWidth }px` : '100vw',
@@ -16,7 +17,7 @@
         v-model="isClosedSettings"
         @switchTheme="switchTheme"
         @switchLang="switchLang"
-        @switchFullscreen="isFullscreen = !isFullscreen"
+        @switchFullscreen="switchFullscreen"
       />
 
       <LayoutContent
@@ -38,7 +39,7 @@
           :isWidthMore768="isWidthMore768"
           @switchTheme="switchTheme"
           @switchLang="switchLang"
-          @switchFullscreen="isFullscreen = !isFullscreen"
+          @switchFullscreen="switchFullscreen"
         />
       </AppModal>
 
@@ -97,7 +98,11 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['clearHistory', 'addToHistory']),
+    ...mapMutations([
+      'clearHistory', 
+      'addToHistory', 
+      'switchFullscreen',
+    ]),
   },
 
   beforeMount() {
