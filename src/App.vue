@@ -8,7 +8,7 @@
       maxHeight: isDesktop ? `${ containerHeight }px` : '100vh',
     }"
   >
-    <Icon v-if="!isPageLoad" type="time-oclock" class="loader" :size="100" rotate/>
+    <AppLoader v-if="!isPageLoad" :size="100" rotate/>
 
     <div v-else class="minis__wrapper">
       <SettingsDesktop
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import { Icon, AppModal, SettingsDesktop, SettingsMobile } from '@minis-core/components';
+import { AppLoader, AppModal, SettingsDesktop, SettingsMobile } from '@minis-core/components';
 import { minisMixin, resizeMixin, faviconMixin, translateMixin } from '@minis-core/mixins';
 import LayoutContent from './components/LayoutContent';
 
@@ -76,7 +76,7 @@ export default {
     AppModal,
     SettingsDesktop,
     SettingsMobile,
-    Icon,
+    AppLoader,
   },
 
   mixins: [minisMixin, resizeMixin, faviconMixin, translateMixin],
@@ -150,13 +150,6 @@ body {
   background-color: #333;
   min-height: 100vh;
   overflow: hidden;
-
-  .loader {
-    height: 100%;
-    margin: auto;
-    display: block;
-    opacity: .5;
-  }
 
   .container {
     width: 100vw;
