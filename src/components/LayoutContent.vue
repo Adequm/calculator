@@ -66,9 +66,12 @@
 
 <script>
 import Icon from './app/Icon';
+import { translateMixin } from '@minis-core/mixins';
 
 export default {
   name: 'LayoutContent',
+
+  mixins: [translateMixin],
 
   components: {
     Icon,
@@ -78,7 +81,6 @@ export default {
     appWidth: Number,
     appHeight: Number,
     isDesktop: Boolean,
-    translate: Function,
     history: Array,
   },
 
