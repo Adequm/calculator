@@ -64,11 +64,7 @@
 </template>
 
 <script>
-import Icon from './components/app/Icon';
-import SettingsDesktop from './components/app/SettingsDesktop';
-import SettingsMobile from './components/app/SettingsMobile';
-import AppModal from './components/app/AppModal';
-
+import { Icon, AppModal, SettingsDesktop, SettingsMobile } from '@minis-core/components';
 import { minisMixin, resizeMixin, faviconMixin, translateMixin } from '@minis-core/mixins';
 import LayoutContent from './components/LayoutContent';
 
