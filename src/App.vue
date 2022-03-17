@@ -167,15 +167,17 @@ body {
         display: flex;
         justify-content: center;
         margin-top: 5px;
+        margin-left: -10px;
+        margin-right: 20px;
+        bottom: 0;
+        padding: 15px 25px;
         font-weight: bold;
         color: var(--special-color);
         opacity: .25;
         cursor: pointer;
         transition: opacity .2s;
         text-decoration: none;
-        margin-right: 20px;
         position: absolute;
-        bottom: 0;
         &:hover {
           opacity: .5;
         }
