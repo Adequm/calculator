@@ -30,14 +30,13 @@ store.mutations = {
 
 
 const persistedLocal = [
-  'isFullscreen',
   'history',
 ];
 store.modules = { minis: minisModule };
 store.plugins = [
   createMutationsSharer({ predicate: () => [...persistedMinis, ...persistedLocal] }),
   createPersistedState({ paths: persistedMinis, key: 'minis' }),
-  createPersistedState({ paths: persistedLocal, key: projectKey }),
+  createPersistedState({ paths: persistedLocal.concat('isFullscreen'), key: projectKey }),
 ];
 
 export default new Vuex.Store(store);
