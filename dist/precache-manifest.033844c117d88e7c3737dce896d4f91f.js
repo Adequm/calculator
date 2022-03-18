@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e8c40623a71780a1b632",
+    "revision": "a4dc3fb8546fb2be34b9",
     "url": "/minis-calculator/css/app.2af63650.css"
   },
   {
@@ -28,12 +28,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/minis-calculator/img/confetti.14a9dfc6.svg"
   },
   {
-    "revision": "2422413b6751bf8838b2cd4b1cddbe21",
+    "revision": "9bdd67c87d4b8104b2fabb9c109a63ef",
     "url": "/minis-calculator/index.html"
   },
   {
-    "revision": "e8c40623a71780a1b632",
-    "url": "/minis-calculator/js/app.54a245e0.js"
+    "revision": "a4dc3fb8546fb2be34b9",
+    "url": "/minis-calculator/js/app.d892e8a5.js"
   },
   {
     "revision": "ccf8e938fc83117364b7",
