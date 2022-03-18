@@ -23,7 +23,7 @@ store.getters = {
 
 
 store.mutations = {
-  switchFullscreen: state => Vue.set(state, 'isFullscreen', !state.isFullscreen),
+  switchFullscreen: state => Vue.set(state, fullscreenKey, !state[fullscreenKey]),
   addToHistory(state, data) {
     const newHistory = state.history.slice(-9).concat([data]);
     Vue.set(state, 'history', newHistory);
