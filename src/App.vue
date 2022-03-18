@@ -18,10 +18,12 @@
         :appWidth="appWidth"
         :translate="translate"
         :translateDef="translateDef"
+        :showHints="minisHints"
         v-model="isClosedSettings"
+        @switchHints="switchHints"
         @switchTheme="switchTheme"
         @switchLang="switchLang"
-        @switchFullscreen="switchFullscreen"
+        @switchFullscreen="$store.commit(switchFullscreenKey)"
       />
 
       <LayoutContent
@@ -45,7 +47,7 @@
           :isWidthMore768="isWidthMore768"
           @switchTheme="switchTheme"
           @switchLang="switchLang"
-          @switchFullscreen="switchFullscreen"
+          @switchFullscreen="$store.commit(switchFullscreenKey)"
         />
       </AppModal>
 
@@ -100,20 +102,19 @@ export default {
   },
 
   computed: {
-    ...mapState(['history']),
+    ...mapState(['history', 'switchFullscreenKey']),
   },
 
   methods: {
     ...mapMutations([
       'clearHistory', 
       'addToHistory', 
-      'switchFullscreen',
     ]),
   },
 
   beforeMount() {
     document.body.addEventListener('click', event => {
-      if(document.body !== event.path[0]) return;
+      if(document.body !== _.get(event.path, 0)) return;
       if(!this.isDesktop) return;
       if(this.isClosedSettings) return;
       this.isClosedSettings = true;
