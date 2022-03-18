@@ -184,7 +184,10 @@ export default {
       if(this.value.endsWith('0') && isNumberKey && !isFractionValue) return;
 
       // Нельзя подряд ставить минусы
-      if(isSignCalcMinus && this.value.endsWith('-')) return;
+      if(isSignCalcMinus && this.value.endsWith('-')) {
+        if(this.value == '-') this.clear();
+        return;
+      }
 
       // Нельзя после '.' ставить знаки
       if(!isNumberKey && isLastSignDot) return;
