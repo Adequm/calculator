@@ -59,7 +59,9 @@
           @click="addSign(num.toString())"
           v-text="num"
         />
-        <div class="calculator__button" @click="addDot">.</div>
+        <div class="calculator__button" @click="addDot">
+          <span style="transform: translateY(-0.3em);" v-text="'.'"/>
+        </div>
         <div class="calculator__button" @click="addSign('0')">0</div>
         <div class="calculator__button" @click="plusMinus">±</div>
         <div class="calculator__button calculator__button-equal" @click="equal"/>
