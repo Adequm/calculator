@@ -33,7 +33,7 @@
         :history="history"
         :style="{ filter: openedModalName ? 'blur(2px)' : 'none' }"
         @openModal="openedModalName = $event"
-        @addToHistory="addToHistory"
+        @addToHistory="addToCalculatorHistory"
         @clearHistory="clearHistory"
       />
 
@@ -108,7 +108,7 @@ export default {
   methods: {
     ...mapMutations([
       'clearHistory', 
-      'addToHistory', 
+      'addToCalculatorHistory', 
     ]),
   },
 

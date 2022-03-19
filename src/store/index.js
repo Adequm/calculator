@@ -20,7 +20,7 @@ store.state = () => ({
 
 store.mutations = {
   [switchFullscreenKey]: state => Vue.set(state, 'isFullscreen', !state.isFullscreen),
-  addToHistory(state, data) {
+  addToCalculatorHistory(state, data) {
     const newHistory = state.history.slice(-9).concat([data]);
     Vue.set(state, 'history', newHistory);
   },
