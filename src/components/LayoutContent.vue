@@ -44,8 +44,12 @@
             :key="`sign_${ sign }`"
             class="calculator__button"
             @click="addSign(sign)"
-            v-text="sign"
-          />
+          >
+            <span 
+              v-text="sign"
+              :style="{ transform: `translateY(${ sign == '*' ? 0.15 : 0 }em)` }"
+            />
+          </div>
         </div>
 
         <div 
@@ -298,10 +302,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .minis__content {
   display: grid;
-  grid-template-rows: 35% 65%;
+  grid-template-rows: minmax(200px, 35%) 1fr;
   height: inherit;
   background-color: var(--main-bg-color);
   color: var(--text-color);
@@ -311,16 +315,6 @@ export default {
   z-index: 1;
 
   .calculator {
-    display: grid;
-    grid-template-rows: 35% 65%;
-    height: 100%;
-    background-color: var(--main-bg-color);
-    color: var(--text-color);
-    font-size: 24px;
-    box-shadow: 0 3px 0 2px var(--main-bg-color);
-    position: relative;
-
-
     &__display {
       padding: 20px;
       padding-right: 15px;
@@ -410,7 +404,7 @@ export default {
         gap: 20px;
         background-color: var(--main-bg-color);
         border-radius: 10px;
-        color: var(--special-color);
+        color: var(--special-color-900);
       }
 
       .calculator__button {
@@ -421,15 +415,38 @@ export default {
         align-items: center;
         position: relative;
         opacity: .8;
+
+        &:hover:not(.calculator__button-equal)::after {
+          background: var(--special-color-100);
+        }
+
+        &:not(.calculator__button-equal)::after {
+          content: "";
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          border-radius: 10px;
+          z-index: -1;
+
+        }
+
         &-equal {
-          background-color: var(--special-color);
+          background-color: var(--special-color-700);
           clip-path: polygon(0 0, 105% 0, 115% calc(50% + 20px), 0 calc(50% + 20px));
           color: #F3F3F3;
           height: 200%;
+          &:hover {
+            background-color: var(--special-color-300);
+          }
           &::after {
             content: '=';
-            padding-bottom: calc((100vh * 0.65 - 120px)/5);
             position: absolute;
+            width: 100%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-50%);
           }
         }
       }
@@ -446,10 +463,6 @@ export default {
     );
     .calculator {
       border-radius: 10px;
-
-      &__buttons .calculator__button-equal::after {
-        padding-bottom: calc((560px * 0.65 - 120px)/5);
-      }
     }
   }
 }
