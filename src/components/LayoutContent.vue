@@ -406,7 +406,7 @@ export default {
         gap: 20px;
         background-color: var(--main-bg-color);
         border-radius: 10px;
-        color: var(--special-color-900);
+        color: var(--special-color-800);
       }
 
       .calculator__button {
@@ -418,8 +418,11 @@ export default {
         position: relative;
         opacity: .8;
 
-        &:hover:not(.calculator__button-equal)::after {
-          background: var(--special-color-100);
+        &:hover:not(.calculator__button-equal) {
+          color: var(--light-color);
+          &::after { 
+            background: var(--special-color-200);
+          }
         }
 
         &:not(.calculator__button-equal)::after {
@@ -429,13 +432,12 @@ export default {
           position: absolute;
           border-radius: 10px;
           z-index: -1;
-
         }
 
         &-equal {
           background-color: var(--special-color-700);
           clip-path: polygon(0 0, 105% 0, 115% calc(50% + 20px), 0 calc(50% + 20px));
-          color: #F3F3F3;
+          color: var(--light-color);
           height: 200%;
           &:hover {
             background-color: var(--special-color-300);
@@ -463,9 +465,6 @@ export default {
       0 5px, 5px 0, calc(100% - 5px) 0, 101% 5px, 
       101% calc(100% - 5px), calc(100% - 5px) 101%, 5px 101%, 0 calc(100% - 5px)
     );
-    .calculator {
-      border-radius: 10px;
-    }
   }
 }
 </style>
