@@ -6,11 +6,14 @@
   >
       <div class="calculator__display">
         <div 
-          v-if="!isDesktop"
-          class="settings__button" 
+          v-if="isShowSettingsButton"
+          id="settingsButton"
+          class="settings__button"
+          :loading="isFrame && 'loading'"
           @click="$emit('openModal', 'settings')"
         >
-          <Icon type="settings"/>
+          <Icon class="settings__button-done" type="settings"/>
+          <Icon class="settings__button-loading" type="physics" rotate/>
         </div>
         <div class="calculator__history" ref="calculator__history">
           <div class="calculator__history_container">
@@ -84,10 +87,15 @@ export default {
   },
 
   props: {
+    reRender: Boolean,
+    isShowSettingsButton: Boolean,
+    isFrame: Boolean,
     appWidth: Number,
     appHeight: Number,
-    isDesktop: Boolean,
-    history: Array,
+    history: {
+      type: Array,
+      default: () => [],
+    },
   },
 
   data: () => ({
@@ -104,6 +112,7 @@ export default {
       this.value = this.value.slice(0, this.limit);
     },
     appWidth: 'changeFontSize',
+    reRender: 'changeFontSize',
   },
 
   computed: {
@@ -287,14 +296,12 @@ export default {
         case 'Enter':
           this.equal();
           break;
-        case 'Escape':
-          this.$emit('switchSettings');
-          break;
       }
     },
   },
 
   beforeMount() {
+    this.$nextTick(this.changeFontSize);
     document.addEventListener('keydown', this.keydown);
   },
 
@@ -337,6 +344,13 @@ export default {
         justify-content: center;
         align-items: center;
         opacity: .5;
+        &:not([loading="loading"]) {
+          .settings__button-loading { display: none }
+        }
+        &[loading="loading"] {
+          .settings__button-done { display: none }
+          pointer-events: none;
+        }
       }
 
       .calculator__history {
