@@ -20,7 +20,7 @@
         class="minis__wrapper"
         :style="{ 
           width: `${ appWidth }px`,
-          maxWidth: `${ isFullscreen ? appWidth : containerWidth }px`,
+          maxWidth: `${ isFullscreen || !isWidthMore768 || isFullscreenInFrame ? appWidth : containerWidth }px`,
         }"
       >
         <SettingsDesktop
@@ -59,7 +59,7 @@
           ref="LayoutFrame"
           :isResize="!!startResizeX"
           :key="`${minisIndex}_${minis}_${isFullscreen}`"
-          :link="`${ domen + minis }?isFullscreen=${ isFullscreen }&index=${ minisIndex }`"
+          :link="`${ domen + minis }?isFullscreen=${ isFullscreen || !isWidthMore768 }&index=${ minisIndex }`"
           :style="{ filter: openedModalName ? 'blur(2px)' : 'none' }"
           @load="initFrameSettingsWatcher(minisIndex)"
         />
