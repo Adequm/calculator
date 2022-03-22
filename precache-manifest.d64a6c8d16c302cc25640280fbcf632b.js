@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e430fa9c3e2db1e373c0",
-    "url": "/minis-calculator/css/app.683d0a64.css"
+    "revision": "05079cd117dc3b7f9b29",
+    "url": "/minis-calculator/css/app.202362bd.css"
   },
   {
-    "revision": "af681911dbfd7d9ed09b",
+    "revision": "2f52d9da05b67ac1e6cb",
     "url": "/minis-calculator/css/chunk-vendors.58798b71.css"
   },
   {
@@ -28,16 +28,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/minis-calculator/img/confetti.14a9dfc6.svg"
   },
   {
-    "revision": "fb5eb3ec4ce0d6660d4d7d6eeb49850a",
+    "revision": "d53c0629dfef0e776f5b984a85c92415",
     "url": "/minis-calculator/index.html"
   },
   {
-    "revision": "e430fa9c3e2db1e373c0",
-    "url": "/minis-calculator/js/app.3e437ea0.js"
+    "revision": "05079cd117dc3b7f9b29",
+    "url": "/minis-calculator/js/app.8573e2d5.js"
   },
   {
-    "revision": "af681911dbfd7d9ed09b",
-    "url": "/minis-calculator/js/chunk-vendors.b01d9d60.js"
+    "revision": "2f52d9da05b67ac1e6cb",
+    "url": "/minis-calculator/js/chunk-vendors.1640f917.js"
   },
   {
     "revision": "029debf6c2958b7efa2aebfa7f7f14f1",
