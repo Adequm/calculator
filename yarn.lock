@@ -1004,8 +1004,8 @@
     vue "^2.6.11"
 
 "@minis-core/mixins@git+https://github.com/Adequm/minis-core-mixins.git":
-  version "1.1.8"
-  resolved "git+https://github.com/Adequm/minis-core-mixins.git#94fad0401cbbf4e73fbc0b73ab191e3d38e74742"
+  version "1.1.10"
+  resolved "git+https://github.com/Adequm/minis-core-mixins.git#150f1426e3a60cadab56ebfab1bb3961d7ea8218"
   dependencies:
     lodash "^4.17.21"
     vue "^3.2.31"
