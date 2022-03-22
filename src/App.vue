@@ -62,10 +62,9 @@
 
         <LayoutFrame
           v-else
-          ref="LayoutFrame"
           :isResize="!!startResizeX"
-          :key="`${minisIndex}_${minis}_${isFullscreen}`"
-          :link="`${ domen + minis }?isFullscreen=${ isFullscreen || !isWidthMore768 }&index=${ minisIndex }`"
+          :key="`${minisIndex}_${minis}`"
+          :link="`${ domen + minis }?index=${ minisIndex }`"
           :style="{ filter: openedModalName ? 'blur(2px)' : 'none' }"
           @load="initFrameSettingsWatcher(minisIndex)"
         />
