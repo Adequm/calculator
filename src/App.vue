@@ -13,6 +13,12 @@
     <AppLoader v-if="!isPageLoad" :size="100" rotate/>
 
     <div v-else class="frames__container">
+      <input 
+        id="checkboxFullscreen"
+        style="display: none"
+        type="checkbox"
+        v-model="isFullscreenInFrame"
+      />
       <div 
         v-for="(minis, minisIndex) of links"
         :key="`${minis}_${minisIndex}`"
@@ -20,7 +26,7 @@
         class="minis__wrapper"
         :style="{ 
           width: `${ appWidth }px`,
-          maxWidth: `${ isFullscreen || !isWidthMore768 || isFullscreenInFrame ? appWidth : containerWidth }px`,
+          maxWidth: `${ minisWrapperMaxWidth }px`,
         }"
       >
         <SettingsDesktop
@@ -83,7 +89,7 @@
         </AppModal>
 
         <div 
-          v-if="isDesktop" 
+          v-show="isDesktop" 
           class="resize_button" 
           @mousedown.prevent="startResize"
           @dblclick.prevent="autoResize"
