@@ -191,7 +191,18 @@ body {
         box-shadow: 0 3px 0 2px var(--main-bg-color);
         border-radius: 10px;
         box-sizing: border-box;
-
+        & > .minis {
+          padding: 0 !important;
+          right: 0;
+          opacity: .25;
+          width: calc((100% - 20px)/4 - 20px);
+          color: var(--special-color-700) !important;
+          top: 100%;
+          &:hover {
+            opacity: 1;
+            color: var(--special-color-300) !important;
+          }
+        }
         .minis {
           display: flex;
           justify-content: center;
@@ -202,13 +213,12 @@ body {
           padding: 15px 25px;
           font-weight: bold;
           color: var(--special-color);
-          opacity: .25;
           cursor: pointer;
           transition: opacity .2s;
           text-decoration: none;
           position: absolute;
           &:hover {
-            opacity: .5;
+            color: var(--text-color);
           }
         }
 
