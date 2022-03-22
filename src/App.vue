@@ -30,7 +30,7 @@
         }"
       >
         <SettingsDesktop
-          v-if="!minisIndex && isDesktop && !isFrame"
+          v-show="!minisIndex && isDesktop && !isFrame"
           :themeIcon="themeMain.icon"
           :appHeight="appHeight"
           :appWidth="appWidth"
